@@ -13,9 +13,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-
 type Msg struct {
-	Id   int `json:"id"`
+	Id    int `json:"id"`
 	Value int `json:"value"`
 }
 
@@ -41,11 +40,11 @@ func getMongoCollection(mongoURL, dbName, collectionName string) *mongo.Collecti
 
 func getKafkaReader(kafkaURL, topic, groupID string) *kafka.Reader {
 	return kafka.NewReader(kafka.ReaderConfig{
-		Brokers:  []string{kafkaURL},
-		GroupID:  groupID,
-		Topic:    topic,
-		MinBytes: 1,
-		MaxBytes: 10e6, // 10MB
+		Brokers:        []string{kafkaURL},
+		GroupID:        groupID,
+		Topic:          topic,
+		MinBytes:       1,
+		MaxBytes:       10e6, // 10MB
 		CommitInterval: time.Second,
 	})
 }
@@ -63,7 +62,6 @@ func main() {
 	topic := os.Getenv("topic")
 	groupID := "consumer-group-id"
 	reader := getKafkaReader(kafkaURL, topic, groupID)
-
 
 	defer reader.Close()
 
